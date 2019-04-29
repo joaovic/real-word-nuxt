@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Evento #{{ id }}</h1>
+    <h1>{{ event.title }}</h1>
   </div>
 </template>
 
@@ -8,19 +8,30 @@
 export default {
   head() {
     return {
-      title: 'Evento #' + this.id,
+      title: this.event.title,
       meta: [
         {
           hid: 'description',
           name: 'description', // <-- moved this over from index.vue
-          content: 'Tudo que você precisa saber sobre o evento #' + this.id
+          content:
+            'Tudo que você precisa saber sobre o evento' + this.event.title
         }
       ]
     }
   },
-  computed: {
-    id() {
-      return this.$route.params.id
+  async asyncData({ $axios, error, params }) {
+    try {
+      const { data } = await $axios.get(
+        'http://localhost:3000/events/' + params.id
+      )
+      return {
+        event: data
+      }
+    } catch (e) {
+      error({
+        statusCode: 503,
+        message: 'Não foi possível recuperar o evento #' + params.id
+      })
     }
   }
 }
