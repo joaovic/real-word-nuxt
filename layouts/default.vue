@@ -8,16 +8,18 @@
 <script>
 import NavBar from '~/components/NavBar.vue'
 export default {
-  head: {
-    titleTemplate: '%s - Eventos do Mundo Real', // <-- title template
-    meta: [
-      {
-        hid: 'description',
-        name: 'description', // <-- moved this over from index.vue
-        content:
-          'Onde você pode encontrar todos eventos existentes na sua visinhança'
-      }
-    ]
+  head() {
+    return {
+      titleTemplate: '%s - Real World Events',
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content:
+            'Where you can find all the events taking place in your neighborhood'
+        }
+      ]
+    }
   },
   components: {
     NavBar
